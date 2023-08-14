@@ -19,3 +19,14 @@ umask 077
 echo "Creating private and public key"
 echo
 wg genkey | tee privatekey | wg pubkey > publickey
+
+# create virtual interface
+echo "Creating virtual interface"
+echo
+ip link add dev wg0 type wireguard
+echo
+
+# add peers
+echo "Adding 2 peers, a server and a client"
+echo
+ip address add dev wg0 192.168.2.1 peer 192.168.2.2
