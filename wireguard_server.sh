@@ -30,3 +30,6 @@ echo
 echo "Adding 2 peers, a server and a client"
 echo
 ip address add dev wg0 192.168.2.1 peer 192.168.2.2
+
+# configure wg0
+wg set wg0 listen-port 51820 private-key /root/privatekey
