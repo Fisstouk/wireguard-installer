@@ -25,6 +25,8 @@ wg genkey | tee privatekey_server | wg pubkey > publickey_server
 private_key_server=$(cat privatekey_server)
 public_key_server=$(cat publickey_server)
 
+# server configuration file
+
 cat > /etc/wireguard/wg0.conf << EOF
 [Interface]
 PrivateKey = ${private_key_server}
@@ -33,3 +35,5 @@ ListenPort = ${listen_port}
 SaveConfig = true
 EOF
  
+# network forwarding
+sed -i "s/#net.ipv4.ip_forward=1/net.ipv4.ip_forward=1/" /etc/sysctl.conf
