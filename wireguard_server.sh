@@ -8,6 +8,8 @@ echo "Updating the system..."
 echo
 apt update
 
+# install wireguard
+
 if [ ! -f "$WIREGUARD_BIN" ]; then
     echo "Installing wireguard..."
     echo
@@ -15,9 +17,11 @@ if [ ! -f "$WIREGUARD_BIN" ]; then
 fi
 
 # file security
+
 umask 077
 
 # create private key and derive the public key from it
+
 echo "Creating private and public key"
 echo
 wg genkey | tee privatekey_server | wg pubkey > publickey_server
@@ -36,4 +40,5 @@ SaveConfig = true
 EOF
  
 # network forwarding
+
 sed -i "s/#net.ipv4.ip_forward=1/net.ipv4.ip_forward=1/" /etc/sysctl.conf
