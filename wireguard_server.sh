@@ -1,6 +1,8 @@
 #!/bin/bash
 
-WIREGUARD_BIN="/usr/bin/wg"
+wireguard_bin="/usr/bin/wg"
+ip_address_server="192.168.2.1/29"
+listen_port="51820"
 
 echo "Updating the system..."
 echo
@@ -18,18 +20,16 @@ umask 077
 # create private key and derive the public key from it
 echo "Creating private and public key"
 echo
-wg genkey | tee privatekey | wg pubkey > publickey
+wg genkey | tee privatekey_server | wg pubkey > publickey_server
 
-# create virtual interface
-echo "Creating virtual interface"
-echo
-ip link add dev wg0 type wireguard
-echo
+private_key_server=$(cat privatekey_server)
+public_key_server=$(cat publickey_server)
 
-# add peers
-echo "Adding 2 peers, a server and a client"
-echo
-ip address add dev wg0 192.168.2.1 peer 192.168.2.2
-
-# configure wg0
-wg set wg0 listen-port 51820 private-key /root/privatekey
+cat > /etc/wireguard/wg0.conf << "EOF"
+[Interface]
+PrivateKey = ${private_key_server}
+Address = ${ip_address_server}
+ListenPort = ${listen_port}
+SaveConfig = true
+EOF
+ 
