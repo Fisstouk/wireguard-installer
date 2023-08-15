@@ -25,7 +25,7 @@ wg genkey | tee privatekey_server | wg pubkey > publickey_server
 private_key_server=$(cat privatekey_server)
 public_key_server=$(cat publickey_server)
 
-cat > /etc/wireguard/wg0.conf << "EOF"
+cat > /etc/wireguard/wg0.conf << EOF
 [Interface]
 PrivateKey = ${private_key_server}
 Address = ${ip_address_server}
