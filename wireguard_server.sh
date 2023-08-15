@@ -42,3 +42,21 @@ EOF
 # network forwarding
 
 sed -i "s/#net.ipv4.ip_forward=1/net.ipv4.ip_forward=1/" /etc/sysctl.conf
+
+# firewall rules
+
+cat >> /etc/wireguard/wg0.conf << EOF
+PostUp = ufw route allow in on wg0 out on eth0
+PostUp = iptables -t nat -I POSTROUTING -o eth0 -j MASQUERADE
+PreDown = ufw route delete allow in on wg0 out on eth0
+PreDown = iptables -t nat -D POSTROUTING -o eth0 -j MASQUERADE
+EOF
+
+# allow ssh
+
+ufw allow OpenSSH
+
+# restart ufw
+
+ufw disable
+ufw enable
