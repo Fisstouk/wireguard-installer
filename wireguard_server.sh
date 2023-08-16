@@ -60,3 +60,9 @@ ufw allow OpenSSH
 
 ufw disable
 ufw enable
+
+# starting Wireguard server
+
+systemctl enable wg-quick@wg0.service
+systemctl start wg-quick@wg0.service
+systemctl status wg-quick@wg0.service
