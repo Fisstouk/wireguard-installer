@@ -22,7 +22,7 @@ umask 077
 
 # create private key and derive the public key from it
 
-echo "Creating private and public key"
+echo "Creating private and public key for the server"
 echo
 wg genkey | tee privatekey_server | wg pubkey > publickey_server
 
