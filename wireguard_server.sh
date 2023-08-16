@@ -2,7 +2,8 @@
 
 wireguard_bin="/usr/bin/wg"
 ip_address_server="192.168.2.1/29"
-ip_peer_address="192.168.2.2/29"
+ip_address_peer="192.168.2.2/29"
+ip_address_peer_no_cidr="192.168.2.2"
 ip_network_id="192.168.2.0/29"
 listen_port="51820"
 network_interface="enp0s3"
@@ -76,7 +77,7 @@ echo
 wg genkey | tee privatekey_peer | wg pubkey > publickey_peer
 
 private_key_peer=$(cat privatekey_peer)
-publick_key_peer=$(cat publickey_peer)
+public_key_peer=$(cat publickey_peer)
 
 # peer configuration file
 # endpoint will be the public ip address
@@ -92,3 +93,7 @@ PublicKey = ${public_key_server}
 AllowedIPs = ${ip_network_id}
 Endpoint = 100.100.100.100:51820
 EOF
+
+# adding peer pubkey to server conf
+
+wg set wg0 peer ${public_key_peer} allowed-ips ${ip_address_peer_no_cidr}
