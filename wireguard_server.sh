@@ -2,6 +2,7 @@
 
 wireguard_bin="/usr/bin/wg"
 ip_address_server="192.168.2.1/29"
+ip_peer_address="192.168.2.2/29"
 listen_port="51820"
 
 echo "Updating the system..."
@@ -71,3 +72,16 @@ systemctl status wg-quick@wg0.service
 echo "Creating private and public key for the peer"
 echo
 wg genkey | tee privatekey_peer | wg pubkey > publickey_peer
+
+private_key_peer=$(cat privatekey_peer)
+publick_key_peer=$(cat publickey_peer)
+
+# peer configuration file
+
+cat > /etc/wireguard/peer.conf << EOF
+[Interface]
+PrivateKey = ${private_key_peer}
+Address = ${ip_address_peer}
+ListenPort = ${listen_port}
+SaveConfig = true
+EOF
