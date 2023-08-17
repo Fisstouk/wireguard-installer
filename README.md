@@ -27,3 +27,11 @@ When the script has finished, you can retrieve the `peer.conf` file in `/etc/wir
 # Endpoint address
 
 In the `peer.conf` file, you will need to change the Endpoint address to the public IP address of your server, in a NAT configuration for example.
+
+# Adding a new peer
+
+By default, the script will only allow one peer to access the server. To allow multiple peers, make sure you have the correct network CIDR (on the script it is a /29 CIDR), follow the steps below:
+- Choose a new IP address for the peer, for example `192.168.2.3/29`
+- Generate a new pair of keys: `wg genkey | tee privatekey_peer2 | wg pubkey > publickey_peer2`
+- Create a new `peer.conf` file for the new peer to be added
+- Add the public key of the new peer to the server configuration file: `wg set  wg0 peer ${public_key_peer2} allowed-ips ${ip_address_peer2_no_cird}`
