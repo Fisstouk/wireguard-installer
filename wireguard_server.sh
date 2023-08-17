@@ -52,13 +52,17 @@ sed -i "s/#net.ipv4.ip_forward=1/net.ipv4.ip_forward=1/" /etc/sysctl.conf
 cat >> /etc/wireguard/wg0.conf << EOF
 PostUp = ufw route allow in on wg0 out on ${network_interface} 
 PostUp = iptables -t nat -I POSTROUTING -o ${network_interface} -j MASQUERADE
-PreDown = ufw route delete allow in on wg0 out ${network_interface} eth0
+PreDown = ufw route delete allow in on wg0 out ${network_interface}
 PreDown = iptables -t nat -D POSTROUTING -o ${network_interface} -j MASQUERADE
 EOF
 
 # allow ssh
 
 ufw allow OpenSSH
+
+# allow Wireguard
+
+ufw allow 51820/udp
 
 # restart ufw
 
