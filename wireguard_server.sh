@@ -1,6 +1,7 @@
 #!/bin/bash
 
 wireguard_bin="/usr/bin/wg"
+ufw_bin="/usr/sbin/ufw"
 ip_address_server="192.168.2.1/29"
 ip_address_peer="192.168.2.2/29"
 ip_address_peer_no_cidr="192.168.2.2"
@@ -14,10 +15,20 @@ apt update
 
 # install wireguard
 
-if [ ! -f "$WIREGUARD_BIN" ]; then
-    echo "Installing wireguard..."
+if [ ! -f "${wireguard_bin}" ]; then
+    echo "Installing Wireguard..."
+    sleep 5
     echo
     apt install wireguard -y
+fi
+
+# install ufw
+
+if [ ! -f "${ufw_bin}" ]; then
+    echo "Installing UFW"
+    sleep 5
+    echo
+    apt install ufw -y
 fi
 
 # file security
