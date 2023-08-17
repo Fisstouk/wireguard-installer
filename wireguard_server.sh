@@ -38,6 +38,7 @@ umask 077
 # create private key and derive the public key from it
 
 echo "Creating private and public key for the server"
+sleep 3
 echo
 wg genkey | tee privatekey_server | wg pubkey > publickey_server
 
@@ -89,6 +90,7 @@ systemctl status wg-quick@wg0.service
 
 echo "Creating private and public key for the peer"
 echo
+sleep 3
 wg genkey | tee privatekey_peer | wg pubkey > publickey_peer
 
 private_key_peer=$(cat privatekey_peer)
