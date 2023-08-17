@@ -78,8 +78,8 @@ ufw allow 51820/udp
 
 # restart ufw
 
-y | ufw disable
-ufw enable
+ufw disable
+echo y | ufw enable
 
 # starting Wireguard server
 
