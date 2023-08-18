@@ -16,7 +16,7 @@ There is no interaction with the user so if you want to tweak the script, you ne
 
 # Packets
 
-The script will intall the following packets:
+The script will intall the following packages:
 - wireguard
 - [ufw](https://wiki.debian.org/Uncomplicated%20Firewall%20%28ufw%29)
 
@@ -30,8 +30,8 @@ In the `peer.conf` file, you will need to change the Endpoint address to the pub
 
 # Adding a new peer
 
-By default, the script will only allow one peer to access the server. To allow multiple peers, make sure you have the correct network CIDR (on the script it is a /29 CIDR), follow the steps below:
+By default, the script will only allow one peer to access the server. To allow multiple peers, make sure you have the correct network CIDR (on the script it is a /29 CIDR), follow the steps below and add them to the script:
 - Choose a new IP address for the peer, for example `192.168.2.3/29`
 - Generate a new pair of keys: `wg genkey | tee privatekey_peer2 | wg pubkey > publickey_peer2`
-- Create a new `peer.conf` file for the new peer to be added
+- Create a new `peer2.conf` file for the new peer to be added
 - Add the public key of the new peer to the server configuration file: `wg set  wg0 peer ${public_key_peer2} allowed-ips ${ip_address_peer2_no_cird}`
