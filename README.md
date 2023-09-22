@@ -14,7 +14,7 @@ There is no interaction with the user so if you want to tweak the script, you ne
 - `listen_port`: 51820 by default
 - `network_interface`: may vary, depending on your hardware
 
-# Packets
+# Packages
 
 The script will intall the following packages:
 - wireguard
